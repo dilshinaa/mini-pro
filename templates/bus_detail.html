@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bus Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #141e30, #243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 380px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.4);
+        }
+
+        h2 {
+            margin-bottom: 5px;
+        }
+
+        .route {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        hr {
+            margin: 15px 0;
+        }
+
+        .status p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .low { 
+            color: green; 
+            font-weight: bold; 
+        }
+
+        .medium { 
+            color: orange; 
+            font-weight: bold; 
+        }
+
+        .high { 
+            color: red; 
+            font-weight: bold; 
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            background: #243b55;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: #141e30;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+
+        <!-- Dynamic Bus Name -->
+        <h2>{{ bus.name }}</h2>
+        <div class="route">
+            Route: {{ bus.route }}
+        </div>
+
+        <hr>
+
+        <div class="status">
+            <p>Passengers: <span id="passengers">Loading...</span></p>
+            <p>Available Seats: <span id="available">Loading...</span></p>
+            <p>Crowd Level: 
+                <span id="crowd">Loading...</span>
+            </p>
+        </div>
+
+        <a href="/">Search Again</a>
+
+    </div>
+
+    <script>
+        const busId = {{ bus_id }};
+
+        function fetchBusData() {
+            fetch(`/api/bus/${busId}?t=${Date.now()}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("passengers").innerText = data.passengers;
+                    document.getElementById("available").innerText = data.available;
+
+                    let crowdElement = document.getElementById("crowd");
+                    crowdElement.innerText = data.crowd;
+                    crowdElement.className = data.crowd.toLowerCase();
+                })
+                .catch(error => console.log("Error:", error));
+        }
+
+        fetchBusData();
+        setInterval(fetchBusData, 5000);
+    </script>
+
+</body>
+</html>
+
+        
