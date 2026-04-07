@@ -16,21 +16,35 @@ height:100vh;
 margin:0;
 }
 
-.container{
+/* Container animation */
 
+.container{
 background:#eaeaea;
 padding:35px;
 border-radius:15px;
 width:520px;
 box-shadow:0 10px 25px rgba(0,0,0,0.2);
 
+animation:popup 0.5s ease;
+}
+
+@keyframes popup{
+
+from{
+transform:scale(0.9);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
 }
 
 h2{
-
 text-align:center;
 margin-bottom:25px;
-
 }
 
 .bus-card{
@@ -39,56 +53,52 @@ background:#efefef;
 border-radius:12px;
 padding:18px;
 margin-bottom:18px;
+
 display:flex;
 align-items:center;
+
 cursor:pointer;
+
+/* Black outline added */
+border:2px solid white;
+
 transition:0.25s;
 
 }
 
 .bus-card:hover{
 
-transform:scale(1.02);
+transform:scale(1.03);
+
 box-shadow:0 6px 15px rgba(0,0,0,0.2);
 
 }
 
 .bus-icon{
-
 font-size:30px;
 margin-right:15px;
-
 }
 
 .bus-info{
-
 line-height:1.5;
-
 }
 
 .bus-name{
-
 font-weight:bold;
 font-size:16px;
-
 }
 
 .route{
-
 color:#555;
 font-size:14px;
-
 }
 
 .arrival{
-
 color:green;
 font-weight:bold;
-
 }
 
 .recommend{
-
 background:#22c55e;
 color:white;
 padding:4px 8px;
@@ -96,34 +106,27 @@ border-radius:6px;
 font-size:12px;
 display:inline-block;
 margin-top:4px;
-
 }
 
 .search-again{
-
 text-align:center;
 margin-top:20px;
-
 }
 
 a{
-
 text-decoration:none;
 color:black;
-
 }
 
 </style>
 
 </head>
 
-
 <body>
 
 <div class="container">
 
 <h2>🚌 Buses from {{source}} to {{destination}}</h2>
-
 
 {% for bus in buses %}
 
@@ -141,13 +144,10 @@ color:black;
 
 <div class="arrival">{{bus.arrival}}</div>
 
-<!-- ⭐ AI Recommendation (only addition) -->
 {% if bus.id == best_bus %}
-
 <div class="recommend">
 ⭐ AI Recommended Bus
 </div>
-
 {% endif %}
 
 </div>
@@ -158,17 +158,18 @@ color:black;
 
 {% endfor %}
 
-
 <div class="search-again">
-
 <a href="/">← Search Again</a>
-
 </div>
 
 </div>
 
 </body>
 </html>
+   
+ 
+       
+
    
  
        
